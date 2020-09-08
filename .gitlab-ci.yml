@@ -1,6 +1,6 @@
 #Define a Default Image which would be used for all the stages
 default:
-  image: 92sgupta/vlocity_sfdx_tools:v3.0
+  image: jfgarcia268/sfdx_vlocity_java:latest
 #
 # Define the stages of our pipeline
 #
@@ -16,6 +16,7 @@ variables:
 #Job stages
 CI_Deploy:
     stage: deploy
+    image: 92sgupta/vlocity_sfdx_tools:latest
     only:
       refs:
            - dev
@@ -130,7 +131,6 @@ Vlocity_deploy:
 
 Scratch_org:
     stage: Create_scratch_org
-    image: 92sgupta/vlocity_sfdx_tools:v1.0
     rules:
        - if: '$scratch_org == "true"'
     script:
