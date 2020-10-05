@@ -1,6 +1,5 @@
 public class VlocityHierarchyPathTriggerUtility 
 {
-    //New change
     public static void onNewRecordTriggerHandler(List<SObject> allRecords)
     {
         List<SObject> withGlobalKeyPath = new List<SObject>();
