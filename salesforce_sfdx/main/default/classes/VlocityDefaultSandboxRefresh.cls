@@ -5,4 +5,3 @@ global class VlocityDefaultSandboxRefresh implements SandboxPostCopy
         vlocity_cmt.CorePostInstallClass.runDev2ProdInserts();
     }
 }
-//Test
