@@ -1,1 +1,33 @@
+name: Vlocity-delta-deploy
 
+on: 
+   
+   workflow_dispatch:
+    
+jobs:
+  
+  deploy-to-org:
+        runs-on: ubuntu-latest
+        steps:
+            # Checkout the source code
+            - name: 'Checkout source code'
+              uses: actions/checkout@v2
+              
+      
+            # Install Salesforce CLI
+            - name: 'Install Salesforce CLI'
+              run: |
+                  wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+                  mkdir ~/sfdx
+                  tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+                  echo "$HOME/sfdx/bin" >> $GITHUB_PATH
+                  ~/sfdx/bin/sfdx version
+                  npm install --global vlocity
+            
+            # Find delta changes
+            - name: 'Finding delta changes'
+              run: |
+                  sfdx vlocityestools:sfsource:createdeltapackage -u SIT -p cmt -d salesforce_sfdx
+                  echo "Deploying the Vlocity components"
+                  vlocity -sfdx.username SIT -job Deploy_Delta.yaml packDeploy --verbose true --simpleLogging true
+    
