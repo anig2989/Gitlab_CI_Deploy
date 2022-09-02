@@ -22,7 +22,16 @@ jobs:
                   tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
                   echo "$HOME/sfdx/bin" >> $GITHUB_PATH
                   ~/sfdx/bin/sfdx version
+                  
+            # Install vlocity
+            - name: 'Install vlocity'
+              run:
                   npm install --global vlocity
+                  
+            # Install vlocityestools
+         #   - name: 'Install vlocityestools'
+         #     run:
+         #         echo "yes" | sfdx plugins:install vlocityestools
             
             # Authenticate Org
             - name: 'Authenticate CI Org'
@@ -32,7 +41,7 @@ jobs:
             # Find delta changes
             - name: 'Finding delta changes'
               run: |
-                  sfdx vlocityestools:sfsource:createdeltapackage -u anig2989@gmail.com -d salesforce_sfdx
+                 # sfdx vlocityestools:sfsource:createdeltapackage -u anig2989@gmail.com -d salesforce_sfdx
                   echo "Deploying the Vlocity components"
                   vlocity -sfdx.username anig2989@gmail.com -job Deploy_Delta.yaml packDeploy --verbose true --simpleLogging true
     
